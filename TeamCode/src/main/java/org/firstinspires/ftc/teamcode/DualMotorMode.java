@@ -5,10 +5,14 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(name = "Dual Motor Mode", group = "Team 13463 (WLHS)")
 
 public class DualMotorMode extends LinearOpMode {
+    //Declaring DcMotors and Servo vars
+    DcMotor Right_Motor, Left_Motor;
+    Servo Servo1;
     public void runOpMode() {
         //Creating vars for came controller input
         double GCx;
@@ -18,17 +22,19 @@ public class DualMotorMode extends LinearOpMode {
         telemetry.addData("Status", "Initializing");
         telemetry.update();
 
-        //declaring motors
+        //Mapping DcMotors and Servos
         //DcMotor Motor_Four = hardwareMap.get(DcMotor.class, "M4");
         //DcMotor Motor_Three = hardwareMap.get(DcMotor.class, "M3");
-        DcMotor Right_Motor = hardwareMap.get(DcMotor.class, "M2");
-        DcMotor Left_Motor = hardwareMap.get(DcMotor.class, "M1");
+        Right_Motor = hardwareMap.get(DcMotor.class, "M2");
+        Left_Motor = hardwareMap.get(DcMotor.class, "M1");
+        Servo1 = hardwareMap.get(Servo.class, "S1");
 
         //setting intial power = 0
         Right_Motor.setPower(0);
         Left_Motor.setPower(0);
         //Motor_Three.setPower(0);
         //Motor_Four.setPower(0);
+        SetServoPositions(-1);
 
         //updating telemetry
         telemetry.addData("Status", "Initialized");
@@ -50,6 +56,8 @@ public class DualMotorMode extends LinearOpMode {
             Left_Motor.setPower(Left_Power);
             Right_Motor.setPower(Right_Power);
 
+            SetServoPositions(Servo1.getPosition() + (gamepad1.left_trigger));
+
             //updating display for user knowlege and debugging purposes
             telemetry.addData("Status", "Running");
             telemetry.addData("Right Stick Y: ", GCy);
@@ -61,5 +69,11 @@ public class DualMotorMode extends LinearOpMode {
         telemetry.addData("Status: ", "Stopped");
         telemetry.update();
     }
-
+    /**Servos have min/max positions
+    This method allows us to set servo positions and limits
+     while still allowing us to use the servo in OPmode
+    **/
+     public void SetServoPositions(double Servo1Pos){
+        Servo1.setPosition(Math.min(Math.max(Servo1Pos, -1), 1));
+    }
 }

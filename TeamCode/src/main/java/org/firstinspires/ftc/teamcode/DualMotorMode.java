@@ -17,37 +17,31 @@ public class DualMotorMode extends LinearOpMode {
         //Creating vars for came controller input
         double GCx;
         double GCy;
-
+        double GClt;
         //updating the display called telemetry for user knowlege.
         telemetry.addData("Status", "Initializing");
         telemetry.update();
-
         //Mapping DcMotors and Servos
         //DcMotor Motor_Four = hardwareMap.get(DcMotor.class, "M4");
         //DcMotor Motor_Three = hardwareMap.get(DcMotor.class, "M3");
         Right_Motor = hardwareMap.get(DcMotor.class, "M2");
         Left_Motor = hardwareMap.get(DcMotor.class, "M1");
         Servo1 = hardwareMap.get(Servo.class, "S1");
-
         //setting intial power = 0
         Right_Motor.setPower(0);
         Left_Motor.setPower(0);
         //Motor_Three.setPower(0);
         //Motor_Four.setPower(0);
-        SetServoPositions(-1);
-
         //updating telemetry
         telemetry.addData("Status", "Initialized");
         telemetry.update();
-
         //waiting for user to press start
         waitForStart();
         while (opModeIsActive()) {
-
             //setting game controller vars = to game controller inputs
             GCy = -gamepad1.right_stick_y;
             GCx = -gamepad1.right_stick_x;
-
+            GClt = gamepad1.left_trigger;
             //THIS IS STUPID
             //declaring new vars with limits for controller
             double Left_Power = Math.min(Math.max(GCx+GCy, -1),1);
@@ -55,13 +49,13 @@ public class DualMotorMode extends LinearOpMode {
             //setting motor speed
             Left_Motor.setPower(Left_Power);
             Right_Motor.setPower(Right_Power);
-
-            SetServoPositions(Servo1.getPosition() + (gamepad1.left_trigger));
-
+//this is annoying
+            SetServoPositions(Servo1.getPosition() + (GClt));
             //updating display for user knowlege and debugging purposes
             telemetry.addData("Status", "Running");
             telemetry.addData("Right Stick Y: ", GCy);
             telemetry.addData("Right Stick X: ", GCx);
+            telemetry.addData("Left Trigger: ", GClt);
             telemetry.update();
             resetRuntime();
         }

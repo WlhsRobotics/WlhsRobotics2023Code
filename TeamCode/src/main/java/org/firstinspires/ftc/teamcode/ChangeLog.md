@@ -8,8 +8,18 @@ Version 3: Perfected Manual Mode - Done By 11-1-2023
 Version 4: Basic Autonomous - Done By 11-23-2023
 Version 5: Perfected Autonomous  - Done By 12-10-2023
 
-**Version 1.02**
+**Version 1.03**
 Last Tested: Never
+
+Changes for turn table:
+1. Added Boolean to Double Conversions for turn table motor.
+
+Changes for Servo:
+1. Renamed Var to webcam_rotation
+2. Assinged Button A for stopping webcam rotation
+**Version 1.02**
+Last Tested: 10-5-2023
+Test Output: Moved as Expected. Servo would not stop.
 
 Changes for Servo:
 1. Rewriting servo Code so that servo is not assigned value

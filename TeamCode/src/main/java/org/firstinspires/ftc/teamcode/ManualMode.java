@@ -8,9 +8,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 /** @noinspection ALL*/
-@TeleOp(name = "Dual Motor Mode", group = "Team 13463 (WLHS)")
+@TeleOp(name = "Manual Mode", group = "Team 13463 (WLHS)")
 
-public class DualMotorMode extends LinearOpMode {
+public class ManualMode extends LinearOpMode {
     //Declaring DcMotors and Servo vars
     DcMotor Right_Motor, Left_Motor, Turn_Table_Motor;
     Servo  webcam_rotation;
@@ -104,10 +104,10 @@ public class DualMotorMode extends LinearOpMode {
         telemetry.update();
     }
     /**Servos have min/max positions
-    This method allows us to set servo positions and limits
+     This method allows us to set servo positions and limits
      while still allowing us to use the servo in OPmode
-    **/
-     public void SetServoPositions(double Servo1Pos){
+     **/
+    public void SetServoPositions(double Servo1Pos){
         webcam_rotation.setPosition(Math.min(Math.max(Servo1Pos, -1), 1));
     }
 }

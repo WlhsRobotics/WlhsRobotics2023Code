@@ -8,6 +8,14 @@ Version 3: Perfected Manual Mode - Done By 11-1-2023
 Version 4: Basic Autonomous - Done By 11-23-2023
 Version 5: Perfected Autonomous  - Done By 12-10-2023
 
+**Version 1.04**
+Last Tested: Never
+
+Changes Include:
+1. Deleting FourMotorMode.Java
+2. Renaming DualMotorMode to ManualMode
+3. Renaming DualAutoMode to AutoMode
+
 **Version 1.03**
 Last Tested: Never
 

@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 //import org.checkerframework.checker.initialization.qual.Initialized;
 //import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-@TeleOp(name = "DualAutoMode", group = "Team 13463 (WLHS)")
-public class DualAutoMode extends LinearOpMode{
+@TeleOp(name = "AutoMode", group = "Team 13463 (WLHS)")
+public class AutoMode extends LinearOpMode{
     @Override
     public void runOpMode() {
         ColorSensor Color1 = hardwareMap.get(ColorSensor.class, "Color1");

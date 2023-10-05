@@ -8,8 +8,22 @@ Version 3: Perfected Manual Mode - Done By 11-1-2023
 Version 4: Basic Autonomous - Done By 11-23-2023
 Version 5: Perfected Autonomous  - Done By 12-10-2023
 
-**Version 1.01**
+**Version 1.02**
 Last Tested: Never
+
+Changes for Servo:
+1. Rewriting servo Code so that servo is not assigned value
+upon intitialization.
+2. Adding and assigning vars for Left Stick.
+3. Updating Telemetry for Left Stick Values
+
+Changes For Turn table
+1. Assigned values for turn table
+2. Updated telemetry for turn table
+
+**Version 1.01**
+Last Tested: 10-4-2023
+Test Ouput: Servo Ran until user pressed stop.
 
 Changes Include:
 1. Adding servo code to DualMotorMode to test servos

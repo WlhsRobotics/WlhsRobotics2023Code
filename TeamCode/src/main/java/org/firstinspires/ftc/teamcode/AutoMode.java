@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name = "AutoMode", group = "Team 13463 (WLHS)")
 public class AutoMode extends LinearOpMode{
+    //this is a test
     @Override
     public void runOpMode() {
         ColorSensor Color1 = hardwareMap.get(ColorSensor.class, "Color1");

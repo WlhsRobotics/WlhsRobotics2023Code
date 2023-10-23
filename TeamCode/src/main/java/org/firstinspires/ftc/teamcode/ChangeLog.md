@@ -8,6 +8,15 @@ Version 3: Perfected Manual Mode - Done By 11-1-2023
 Version 4: Basic Autonomous - Done By 11-23-2023
 Version 5: Perfected Autonomous  - Done By 12-10-2023
 
+**Version 1.05**
+Last Tested: Never
+
+Changes Include:
+1. Adding code for April Tag Detection
+
+Notes:
+Turn table does work. Starting to work on image recognition in preparation for Version 4. V2 will be delayed.
+
 **Version 1.04**
 Last Tested: Never
 

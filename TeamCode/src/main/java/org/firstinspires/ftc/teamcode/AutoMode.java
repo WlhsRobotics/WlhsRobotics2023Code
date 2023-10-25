@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.graphics.Color;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -27,24 +28,21 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 public class AutoMode<AprilTagAccess> extends LinearOpMode{
     private static final boolean USE_WEBCAM = true;
 
-    //this is a test
     @Override
     public void runOpMode() {
-        April_Tag_Initation();
-        ColorSensor Color1 = hardwareMap.get(ColorSensor.class, "Color1");
-        telemetry.addData("Status", "Initialized");
-        telemetry.update();
+            April_Tag_Init();
+            ColorSensor Color1 = hardwareMap.get(ColorSensor.class, "Color1");
+            telemetry.addData("Status", "Initialized");
+            telemetry.update();
         waitForStart();
         while(opModeIsActive()){
-            
             telemetry.addData("Blue", Color1.blue());
-            telemetry.addData("Green", Color1.green());
-            telemetry.addData("Red", Color1.red());
-            telemetry.update();
+                telemetry.addData("Green", Color1.green());
+                telemetry.addData("Red", Color1.red());
+                telemetry.update();
         }
     }
-
-    private void April_Tag_Initation() {
+    private void April_Tag_Init() {
         AprilTagProcessor aprilTag = new AprilTagProcessor.Builder()
 
                 .build();

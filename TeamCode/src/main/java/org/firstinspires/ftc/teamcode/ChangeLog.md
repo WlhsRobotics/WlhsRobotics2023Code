@@ -8,6 +8,10 @@ Version 3: Perfected Manual Mode - Done By 11-1-2023
 Version 4: Basic Autonomous - Done By 11-23-2023
 Version 5: Perfected Autonomous  - Done By 12-10-2023
 
+**Version 1.06**
+
+Intergrated ConceptAprilTagSwitchableCameras class with AutoMode
+
 **Version 1.05**
 Last Tested: Never
 

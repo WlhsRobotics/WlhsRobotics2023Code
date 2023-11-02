@@ -16,6 +16,7 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import java.util.List;
+import java.lang.NullPointerException;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
@@ -28,7 +29,8 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 //import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 @TeleOp(name = "AutoMode", group = "Team 13463 (WLHS)")
-public class AutoMode<AprilTagAccess> extends LinearOpMode{
+public class AutoMode extends LinearOpMode{
+
     private static final boolean USE_WEBCAM = true;
     private AprilTagProcessor aprilTag;
     private VisionPortal visionPortal;
@@ -77,7 +79,6 @@ public class AutoMode<AprilTagAccess> extends LinearOpMode{
                 .addProcessor(aprilTag)
                 .build();
     }
-    @SuppressLint("DefaultLocale")
     private void telemetryAprilTag() {
 
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
@@ -100,7 +101,6 @@ public class AutoMode<AprilTagAccess> extends LinearOpMode{
         telemetry.addLine("\nkey:\nXYZ = X (Right), Y (Forward), Z (Up) dist.");
         telemetry.addLine("PRY = Pitch, Roll & Yaw (XYZ Rotation)");
         telemetry.addLine("RBE = Range, Bearing & Elevation");
-
     }
 
     private void doCameraSwitching() {
@@ -117,7 +117,7 @@ public class AutoMode<AprilTagAccess> extends LinearOpMode{
             oldLeftBumper = newLeftBumper;
             oldRightBumper = newRightBumper;
         }
-    }   // end method doCameraSwitching()
+    }
     private void telemetryCameraSwitching() {
 
         if (visionPortal.getActiveCamera().equals(webcam1)) {
@@ -127,6 +127,5 @@ public class AutoMode<AprilTagAccess> extends LinearOpMode{
             telemetry.addData("activeCamera", "Webcam 2");
             telemetry.addData("Press LeftBumper", "to switch to Webcam 1");
         }
-
     }
 }

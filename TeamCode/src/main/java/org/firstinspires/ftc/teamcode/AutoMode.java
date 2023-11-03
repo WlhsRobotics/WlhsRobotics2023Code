@@ -1,86 +1,69 @@
 package org.firstinspires.ftc.teamcode;
 
-import android.annotation.SuppressLint;
-import android.graphics.Color;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.ColorSensor;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import android.graphics.Canvas;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import org.firstinspires.ftc.robotcore.external.ClassFactory;
-import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
-import org.firstinspires.ftc.robotcore.external.hardware.camera.CameraName;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.CameraControl;
+import org.firstinspires.ftc.robotcore.internal.camera.calibration.CameraCalibration;
 import org.firstinspires.ftc.vision.VisionPortal;
+import org.firstinspires.ftc.vision.VisionProcessor;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
+import org.opencv.core.Mat;
+
+import java.util.ArrayList;
 import java.util.List;
-import java.lang.NullPointerException;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.vision.VisionPortal;
-import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
-import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
-//import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-//import org.checkerframework.checker.initialization.qual.Initialized;
-//import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-@TeleOp(name = "AutoMode", group = "Team 13463 (WLHS)")
+@TeleOp(name="AutoMode", group = "Main")
+
 public class AutoMode extends LinearOpMode{
-
-    private static final boolean USE_WEBCAM = true;
-    private AprilTagProcessor aprilTag;
+    //declaring Webcams
+    private WebcamName Webcam1, Webcam2;
+    //Declaring an Active Webcam for easy and setting it to Webcam 1 by default.
+    WebcamName ActiveWebCam;
+    //For Vison Portal as used AprilTagInitation
     private VisionPortal visionPortal;
-    private WebcamName webcam1, webcam2;
-    private boolean oldLeftBumper;
-    private boolean oldRightBumper;
-
-    @Override
+    //Making April Tag var as used in multiple Methods
+    private AprilTagProcessor aprilTag;
     public void runOpMode() {
-            April_Tag_Init();
-            ColorSensor Color1 = hardwareMap.get(ColorSensor.class, "Color1");
-            telemetry.addData("Status", "Initialized");
-            telemetry.update();
+        //Initiation for April Tag and Webcams
+        AprilTagInitiation();
+        telemetry.addData("Status: ","Initialized");
+        telemetry.update();
+
         waitForStart();
-        while(opModeIsActive()){
-            telemetryCameraSwitching();
+        while (opModeIsActive()){
+            SwitchCamera();
             telemetryAprilTag();
-
-            // Push telemetry to the Driver Station.
-            telemetry.update();
-
-            // Save CPU resources; can resume streaming when needed.
-            if (gamepad1.dpad_down) {
-                visionPortal.stopStreaming();
-            } else if (gamepad1.dpad_up) {
-                visionPortal.resumeStreaming();
-            }
-                telemetry.addData("Blue", Color1.blue());
-                telemetry.addData("Green", Color1.green());
-                telemetry.addData("Red", Color1.red());
-                telemetry.update();
-                doCameraSwitching();
-                sleep(20);
+            sleep(10000);
         }
     }
-    private void April_Tag_Init() {
-        AprilTagProcessor aprilTag = new AprilTagProcessor.Builder()
-                .build();
-        webcam1 = hardwareMap.get(WebcamName.class, "Webcam 1");
-        webcam2 = hardwareMap.get(WebcamName.class, "Webcam 2");
-        CameraName switchableCamera = ClassFactory.getInstance()
-                .getCameraManager().nameForSwitchableCamera(webcam1, webcam2);
-
+    //Creating Function for initiation of April Tag and Vision Processor
+    private void AprilTagInitiation() {
+        //Telling april tag to build
+        aprilTag = new AprilTagProcessor.Builder().build();
+        //Mapping Webcams
+        Webcam1 = hardwareMap.get(WebcamName.class, "Webcam1");
+        Webcam2 = hardwareMap.get(WebcamName.class, "Webcam2");
+        //Setting up Vision Portal
         visionPortal = new VisionPortal.Builder()
-                .setCamera(switchableCamera)
+                .setCamera(ActiveWebCam)
                 .addProcessor(aprilTag)
                 .build();
     }
-    private void telemetryAprilTag() {
+    //Creating Function for webcam switching
+    public void SwitchCamera(){
+        if (ActiveWebCam.equals(Webcam1)){
+            ActiveWebCam=Webcam2;
+        }
+        else if (ActiveWebCam.equals(Webcam2)){
+            ActiveWebCam=Webcam1;
+        }
+    }
 
+    //for telling user about what is being dectected
+    public void telemetryAprilTag() throws NullPointerException {
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
         telemetry.addData("# AprilTags Detected", currentDetections.size());
 
@@ -101,31 +84,13 @@ public class AutoMode extends LinearOpMode{
         telemetry.addLine("\nkey:\nXYZ = X (Right), Y (Forward), Z (Up) dist.");
         telemetry.addLine("PRY = Pitch, Roll & Yaw (XYZ Rotation)");
         telemetry.addLine("RBE = Range, Bearing & Elevation");
+
     }
 
-    private void doCameraSwitching() {
-        if (visionPortal.getCameraState() == VisionPortal.CameraState.STREAMING) {
-            // If the left bumper is pressed, use Webcam 1.
-            // If the right bumper is pressed, use Webcam 2.
-            boolean newLeftBumper = gamepad1.left_bumper;
-            boolean newRightBumper = gamepad1.right_bumper;
-            if (newLeftBumper && !oldLeftBumper) {
-                visionPortal.setActiveCamera(webcam1);
-            } else if (newRightBumper && !oldRightBumper) {
-                visionPortal.setActiveCamera(webcam2);
-            }
-            oldLeftBumper = newLeftBumper;
-            oldRightBumper = newRightBumper;
-        }
-    }
-    private void telemetryCameraSwitching() {
 
-        if (visionPortal.getActiveCamera().equals(webcam1)) {
-            telemetry.addData("activeCamera", "Webcam 1");
-            telemetry.addData("Press RightBumper", "to switch to Webcam 2");
-        } else {
-            telemetry.addData("activeCamera", "Webcam 2");
-            telemetry.addData("Press LeftBumper", "to switch to Webcam 1");
-        }
-    }
+
+
+
+
+
 }

@@ -31,12 +31,9 @@ public class ManualMode extends LinearOpMode {
         //Mapping DcMotors and Servos
         Right_Motor = hardwareMap.get(DcMotor.class, "M2");
         Left_Motor = hardwareMap.get(DcMotor.class, "M1");
-        webcam_rotation = hardwareMap.get(Servo.class, "S1");
-        Turn_Table_Motor = hardwareMap.get(DcMotor.class, "M3");
         //setting intial power = 0
         Right_Motor.setPower(0);
         Left_Motor.setPower(0);
-        webcam_rotation.setPosition(webcam_rotation.getPosition());
         //Motor_Three.setPower(0);
         //Motor_Four.setPower(0);
         //updating telemetry
@@ -71,15 +68,9 @@ public class ManualMode extends LinearOpMode {
             //declaring new vars with limits for controller
             double Left_Power = Math.min(Math.max(GCrx+GCry, -1),1);
             double Right_Power = Math.min(Math.max(GCrx-GCry, -1),1);
-            double Turn_Table_Motor_Power = Math.min(Math.max(GClb-GCrb, -1),1);
             //setting motor speed
             Left_Motor.setPower(Left_Power);
             Right_Motor.setPower(Right_Power);
-            Turn_Table_Motor.setPower(Turn_Table_Motor_Power);
-            if (!GC_A) {
-                webcam_rotation.setPosition(webcam_rotation.getPosition());
-            }
-            webcam_rotation.setPosition(GCly-GClx);
             //updating display for user knowlege and debugging purposes
             {
                 telemetry.addData("Status", "Running");
@@ -93,8 +84,6 @@ public class ManualMode extends LinearOpMode {
                 telemetry.addData("Turn Table Stuff:", "");
                 telemetry.addData("Right Bumper: ", GCrb);
                 telemetry.addData("Left Bumper: ", GCrb);
-                telemetry.addData("Turn Table Motor Value: ", Turn_Table_Motor_Power);
-                telemetry.addData("Webcam Servo Value:",webcam_rotation.getPosition());
                 telemetry.update();
             }
             resetRuntime();

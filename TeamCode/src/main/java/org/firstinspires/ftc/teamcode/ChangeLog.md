@@ -8,6 +8,9 @@ Version 3: Perfected Manual Mode - Done By 11-1-2023
 Version 4: Basic Autonomous - Done By 11-23-2023
 Version 5: Perfected Autonomous  - Done By 12-10-2023
 
+**Version 1.07**
+Re-wrote and commented AutoMode. Removed servo code in manual mode.
+
 **Version 1.06**
 
 Intergrated ConceptAprilTagSwitchableCameras class with AutoMode

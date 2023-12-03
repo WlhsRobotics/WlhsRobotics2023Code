@@ -12,8 +12,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class ManualMode extends LinearOpMode {
     //Declaring DcMotors and Servo vars
-    DcMotor Right_Motor, Left_Motor, Turn_Table_Motor;
-    Servo  webcam_rotation;
+    DcMotor Left_Motor, Right_Motor, Arm_Motor_1, Arm_Motor_2;
+    Servo  webcam_rotation, Grabber;
     
     public void runOpMode() {
         //Creating vars for came controller input
@@ -21,8 +21,11 @@ public class ManualMode extends LinearOpMode {
         boolean rb, lb, A;
         
         //Mapping DcMotors and Servos
-        Right_Motor = hardwareMap.get(DcMotor.class, "M2");
-        Left_Motor = hardwareMap.get(DcMotor.class, "M1");
+        Left_Motor = hardwareMap.DcMotor.get("Left_Drive");
+        Right_Motor = hardwareMap.DcMotor.get("Right_Drive");
+        Arm_Motor_1 = hardwareMap.DcMotor.get("Arm_1");
+        Arm_Motor_2 = hardwareMap.DcMotor.get("Arm_2");
+        Grabber = hardwareMap.Servo.get("Grab");
         
         //setting intial power for drive motors to 0
         Right_Motor.setPower(0);
@@ -52,6 +55,11 @@ public class ManualMode extends LinearOpMode {
             //setting motor speed
             Left_Motor.setPower(Left_Power);
             Right_Motor.setPower(Right_Power);
+
+            //checking for lb / rb inputs
+            if (gamepad1.rb && )
+
+            //changing gripper position
             
             resetRuntime();
         }

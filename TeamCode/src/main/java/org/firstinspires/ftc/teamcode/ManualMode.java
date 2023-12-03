@@ -17,15 +17,8 @@ public class ManualMode extends LinearOpMode {
     
     public void runOpMode() {
         //Creating vars for came controller input
-        double GCrx;
-        double GCry;
-        double GCly;
-        double GClx;
-        boolean bGCrb;
-        boolean bGClb;
-        double GClb;
-        double GCrb;
-        boolean GC_A;
+        double right_stick_x, right_stick_y, left_stick_x, left_stick_y;
+        boolean rb, lb, A;
         
         //Mapping DcMotors and Servos
         Right_Motor = hardwareMap.get(DcMotor.class, "M2");
@@ -34,10 +27,6 @@ public class ManualMode extends LinearOpMode {
         //setting intial power for drive motors to 0
         Right_Motor.setPower(0);
         Left_Motor.setPower(0);
-
-        //If we add front two drive motors
-        //Motor_Three.setPower(0);
-        //Motor_Four.setPower(0);
         
         //updating telemetry
         telemetry.addData("Status", "Initialized");
@@ -48,56 +37,28 @@ public class ManualMode extends LinearOpMode {
         
         while (opModeIsActive()) {
             //setting game controller vars = to game controller inputs
-            GCry = -gamepad1.right_stick_y;
-            GCrx = -gamepad1.right_stick_x;
-            GClx = gamepad1.left_stick_x;
-            GCly = gamepad1.left_stick_y;
-            bGClb = gamepad1.left_bumper;
-            bGCrb = gamepad1.right_bumper;
-            GC_A = gamepad1.a;
-            
-            //boolean to Double Conversion
-            if (!bGClb) GClb = 0.0; else GClb = 1.0;
-            if (!bGCrb) GCrb = 0.0; else GCrb = 1.0;
+            right_stick_x = -gamepad1.right_stick_x;
+            right_stick_y = -gamepad1.right_stick_y;
+            left_stick_x = gamepad1.left_stick_x;
+            left_stick_y = gamepad1.left_stick_y;
+            lb = gamepad1.left_bumper;
+            rb = gamepad1.right_bumper;
+            A = gamepad1.a;
             
             //declaring new vars with limits for controller
-            double Left_Power = Math.min(Math.max(GCrx+GCry, -1),1);
-            double Right_Power = Math.min(Math.max(GCrx-GCry, -1),1);
+            double Left_Power = Math.min(Math.max(right_stick_x + right_stick_y, -1), 1);
+            double Right_Power = Math.min(Math.max(right_stick_x - right_stick_y, -1), 1);
             
             //setting motor speed
             Left_Motor.setPower(Left_Power);
             Right_Motor.setPower(Right_Power);
             
-            //updating display for user knowlege and debugging purposes
-            debug();
-            
             resetRuntime();
         }
+        
         //after stop is pressed, informing user of program status
         telemetry.addData("Status: ", "Stopped");
         telemetry.update();
-    }
-
-    
-    public void debug extends runOpMode()
-    {
-        telemetry.addData("Status", "Running");
-        telemetry.addData("Movement Stuff:", "");
-        telemetry.addData("Right Stick Y: ", GCry);
-        telemetry.addData("Right Stick X: ", GCrx);
-        telemetry.addData("Servo Stuff:", "");
-        telemetry.addData("Left Stick Y: ", GCly);
-        telemetry.addData("Left Stick X: ", GClx);
-        telemetry.addData("Servo Value", GCly-GClx);
-        telemetry.addData("Turn Table Stuff:", "");
-        telemetry.addData("Right Bumper: ", GCrb);
-        telemetry.addData("Left Bumper: ", GCrb);
-        telemetry.update();
-    }
-    
-    public double superComplexFormula extends runOpMode()
-    {
-        GCry = 1;
     }
 
 }

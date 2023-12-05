@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 /** @noinspection ALL*/
-@TeleOp(name = "Manual Mode", group = "Team 13463 (WLHS)")
+@TeleOp(name = "Manual Mode", group = "Team 13463 WLHS")
 
 public class ManualMode extends LinearOpMode {
     //Declaring DcMotors and Servo vars
@@ -63,7 +63,7 @@ public class ManualMode extends LinearOpMode {
             if (gamepad1.rb && grip_pos < Servo.MAX_POSITION) grip_pos += .01;
             if (gamepad1.lb && grip_pos > Servo.MIN_POSIITON) grip_pos -= .01;
 
-            //changing gripper position
+            //changing grabber position
             Grabber.setPosition(Range.clip(grip_pos, Servo.MIN_POSITION, Servo.MAX_POSITION));
             
             resetRuntime();

@@ -17,8 +17,11 @@ public class ManualMode extends LinearOpMode {
     
     public void runOpMode() {
         //Creating vars for came controller input
-        double right_stick_x, right_stick_y, left_stick_x, left_stick_y;
+        double right_stick_x, right_stick_y, left_stick_x, left_stick_y, left_power, right_power;
         boolean rb, lb, A;
+
+        //making current gripper position
+        double grip_pos = Servo.MAX_POSITION;
         
         //Mapping DcMotors and Servos
         Left_Motor = hardwareMap.DcMotor.get("Left_Drive");
@@ -48,18 +51,20 @@ public class ManualMode extends LinearOpMode {
             rb = gamepad1.right_bumper;
             A = gamepad1.a;
             
-            //declaring new vars with limits for controller
-            double Left_Power = Math.min(Math.max(right_stick_x + right_stick_y, -1), 1);
-            double Right_Power = Math.min(Math.max(right_stick_x - right_stick_y, -1), 1);
+            //setting power with limits for motor vars
+            left_power = Math.min(Math.max(right_stick_x + right_stick_y, -1), 1);
+            right_power = Math.min(Math.max(right_stick_x - right_stick_y, -1), 1);
             
             //setting motor speed
             Left_Motor.setPower(Left_Power);
             Right_Motor.setPower(Right_Power);
 
             //checking for lb / rb inputs
-            if (gamepad1.rb && )
+            if (gamepad1.rb && grip_pos < Servo.MAX_POSITION) grip_pos += .01;
+            if (gamepad1.lb && grip_pos > Servo.MIN_POSIITON) grip_pos -= .01;
 
             //changing gripper position
+            Grabber.setPosition(Range.clip(grip_pos, Servo.MIN_POSITION, Servo.MAX_POSITION));
             
             resetRuntime();
         }

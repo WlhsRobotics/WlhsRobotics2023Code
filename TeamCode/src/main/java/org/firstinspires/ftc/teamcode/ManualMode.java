@@ -71,6 +71,7 @@ public class ManualMode extends LinearOpMode {
         
         //after stop is pressed, informing user of program status
         telemetry.addData("Status: ", "Stopped");
+        telementry.addData("Power: ", "L: " + left_power + "R: " + right_power);
         telemetry.update();
     }
 
